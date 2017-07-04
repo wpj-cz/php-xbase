@@ -24,10 +24,10 @@ class WritableTable extends Table
         return $result;
     }
 
-    public function create($filename, $fields)
+    public static function create($filename, $fields, $table = '')
     {        
         if (!$fields || !is_array($fields)) {
-            throw new Exception\TableException("cannot create xbase with no fields", $this->tableName);
+            throw new Exception\TableException("cannot create xbase with no fields", $table);
         }
         
         $recordByteLength = 1;
@@ -37,7 +37,7 @@ class WritableTable extends Table
         
         foreach ($fields as $field) {
             if (!$field || !is_array($field) || sizeof($field)<2) {
-                throw new Exception\TableException("fields argument error, must be array of arrays", $this->tableName);
+                throw new Exception\TableException("fields argument error, must be array of arrays", $table);
             }
             $column = new Column($field[0], $field[1], 0, @$field[2], @$field[3], 0, 0, 0, 0, 0, 0, $i, $recordByteLength);
             $recordByteLength += $column->getDataLength();
