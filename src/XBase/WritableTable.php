@@ -3,7 +3,15 @@
 namespace XBase;
 
 class WritableTable extends Table
-{    
+{
+    public function __construct($tableName, $avaliableColumns = null, $convertFrom = null)
+    {
+        $this->tableName = $tableName;
+        $this->avaliableColumns = $avaliableColumns;
+        $this->convertFrom = $convertFrom;
+        $this->memoFile = new Memo($this, $this->tableName);
+    }
+
     public function cloneFrom($table)
     {
         $result = new WritableTable($table->tableName);
